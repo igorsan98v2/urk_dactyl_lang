@@ -1,0 +1,50 @@
+@startuml
+
+class BuilderTest {
+    testUpdateSignDataSetRequest()
+}
+
+class UpdateSignDataSetRequest {
+    -UpdateSignDataSetRequest();
+    __
+    {static} Builder
+}
+BuilderTest "call"--> Builder
+Builder --+ UpdateSignDataSetRequest
+Builder <.. "<use>" DecoderType
+Builder <.. "<use>" LocalType
+Builder <.. "<use>" DatasetType
+Builder <.. "<use>" SkeletonType
+UpdateSignDataSetRequest "<builded by>" <.. Builder
+class Builder {
+    Builder setDatasetType(@DatasetType int datasetType)
+    Builder setSkeletonTypes(@SkeletonType List<Integer> skeletonType)
+    Builder setMethodType(@DecoderType int methodType)
+    Builder setLocalType(@LocalType int localType)
+    UpdateSignDataSetRequest build()
+}
+
+enum DecoderType {
+TGCN
+RNN
+GRU
+MARKOV
+}
+
+enum SkeletonType {
+  HANDS
+  ARMS
+  HEAD_AND_HANDS
+  FULL_BODY
+}
+enum DatasetType {
+    SMALL
+    MIDDLE
+    LARGE
+}
+
+enum LocalType {
+     UKRSL
+     ASL
+}
+@enduml

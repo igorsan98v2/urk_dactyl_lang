@@ -1,0 +1,85 @@
+@startuml
+scale 3
+package stateMachine {
+interface "Стан" as State{
+  обробити(Контекст контекст)
+}
+class "ВЗЯТИ КАРТКУ ЖЕТСТ" as SignCard {
+  обробити(Контекст контекст)
+}
+class "ВЗЯТИ КАРТКУ ПРЕДМЕТ" as ItemCard{
+  обробити(Контекст контекст)
+}
+class "ВІДПОВІДЬ ВІРНА" as CorrectAnswer{
+   обробити(Контекст контекст)
+}
+class "ВІДПОВІДЬ НЕВІРНА" as WrongAnswer{
+   обробити(Контекст контекст)
+}
+
+class "Контекст" as Context{
+    - Стан поточнийСтан;
+    - прогрес;
+    - лімітПрогресу;
+    ~ ВихіднийСигнал поточнийСигнал
+    - правильнаКарткаПредмет
+    - правильнаКарткаЖест
+    ~ назначитиКарткуПредмет(ВихіднийСигнал сигнал)
+    ~ назначитиКарткуЖест(ВихіднийСигнал сигнал)
+    ~ назначитиСтан(Стан стан)
+    ~ Порівняти()
+    ~ збільшитиПрогрес()
+    + "Контекст"()
+    + назначитиВихіднийСигнал(ВихіднийСигнал)
+    + boolean чиЦеКінець()
+}
+}
+class "Гра в пари" as Game {
+
+    + Оцінка оцінити(ВихіднийСигнал сигнал)
+    + грати()
+    -boolean чиЦеКінець()
+}
+
+
+    SignCard --|> State
+    ItemCard --|> State
+    CorrectAnswer --|> State
+    WrongAnswer --|> State
+    WrongAnswer ..> Context
+    CorrectAnswer  ..> Context
+    SignCard ..> Context
+    ItemCard ..> Context
+    State --o Context
+    Context --o Game
+
+note "Контекст() {\nСтан почтковийСтан = \n\tnew  ВЗЯТИ КАРТКУ ЖЕТСТ(this)\n }" as ContextInitNote
+
+note "контекст.назначитиКарткуЖест(контекст.поточнийСигнал)\nКонтекст.назначитиСтан(new ВЗЯТИ КАРТКУ ПРЕДМЕТ(контекст))" as SignCardNote
+note as ItemCardNote
+    "контекст.назначитиКарткуПредмет(контекст.поточнийСигнал)\n"
+    if(контекст.порівняти()){
+        контекст.назначитиСтан(new ВІДПОВІДЬ ВІРНА(контекст))
+    }
+    else {
+        контекст.назначитиСтан(new ВІДПОВІДЬ НЕВІРНА(контекст))
+    }
+end note
+
+note as CorrectAnswerNote
+    контекст.збільшитиПрогрес()
+    контекст.назначитиСтан(new ВЗЯТИ КАРТКУ ЖЕТСТ(контекст))
+end note
+
+note as WrongAnswerNote
+    контекст.назначитиСтан(new  ВЗЯТИ КАРТКУ ЖЕТСТ(контекст))
+end note
+
+
+Context .. ContextInitNote
+SignCardNote .. SignCard
+ItemCardNote .. ItemCard
+CorrectAnswerNote .. CorrectAnswer
+WrongAnswerNote .. WrongAnswer
+
+@enduml

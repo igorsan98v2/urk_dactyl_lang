@@ -1,0 +1,21 @@
+@startuml
+
+
+scale 2
+
+usecase "Дані що виводятся \n користувачеві" as data
+usecase "Вхідні сигнали" as InputSignal
+usecase "Вихідні сигнали" as Output
+usecase "Жести" as Sign
+usecase "Карти" as Cards
+usecase "Дактилі" as Dactyl
+usecase "Оцінка" as Rate
+data --> InputSignal
+data --> Output
+data --> Rate
+
+InputSignal -->Sign
+InputSignal -->Dactyl
+InputSignal -->Cards
+
+@enduml

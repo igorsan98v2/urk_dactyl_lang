@@ -1,0 +1,71 @@
+@startuml
+actor Дитина as child
+actor Батьки as parent
+actor Дослідник as scientist
+
+scale 3
+
+left to right direction
+
+rectangle ПМК {
+    usecase "Іграти" as play
+    usecase "Вибрати режим" as selectMode
+    usecase "Вивчення дактилів" as learnDactyl
+    usecase "Вивчення жестів" as learnSign
+    usecase "Іграти в шаради" as playCards
+    usecase "Іграти в пари\n (жест - слово)" as playPairs
+    usecase "Розповідь казки" as tellFury
+    usecase "Потвторити алфавіт" as alphabet
+    usecase "Розповідь\n коротких оповідань" as tellShortWords
+    usecase "Дивитися досягнення"  as getAchievements
+    usecase "Оцінити\n якість сеансу" as rateSession
+    usecase "Вибрати налаштування" as options
+    usecase "Вибрати метод\n обробки  рухів\n" as selectMethod
+    usecase "Вибрати кінцевий автомат" as stateMachine
+    usecase "Вибрати метод RNN" as RNN
+    usecase "Вибрати метод GRU" as GRU
+    usecase "Вибрати метод TGCN" as TGCN
+    usecase "Вибрати складність" as selectDifficulty
+    usecase "Вибрати допустимі ігри" as selectAllowedGames
+    usecase "Отримати статистику" as getStatistics
+    usecase "Отримати оцінки ігор" as getGameRate
+    usecase "Отримати популярність ігор" as getGamePopularity
+    usecase "Отримати популярність методу" as getMethodPopularity
+    usecase "Отримати якість\n роботи методу" as getQualityMethod
+}
+
+child -- play
+
+play --> selectMode:include
+play <-- learnSign: extends
+play <-- learnDactyl: extends
+learnSign <-- playPairs: extends
+learnSign <-- playCards: extends
+learnSign <-- tellFury: extends
+learnDactyl <-- tellShortWords: extends
+learnDactyl <-- alphabet: extends
+
+child -- getAchievements
+
+parent -- getAchievements
+parent -- rateSession
+
+
+parent -- options
+
+options --> selectAllowedGames: include
+options --> selectMethod: include
+options --> selectDifficulty: include
+
+selectMethod <-- RNN: extends
+selectMethod <-- GRU: extends
+selectMethod <-- TGCN: extends
+selectMethod <-- stateMachine: extends
+
+scientist -- getStatistics
+
+getStatistics --> getGameRate: include
+getStatistics --> getGamePopularity: include
+getStatistics --> getMethodPopularity: include
+getStatistics --> getQualityMethod: include
+@enduml

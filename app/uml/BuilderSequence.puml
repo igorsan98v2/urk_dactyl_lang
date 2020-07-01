@@ -1,0 +1,41 @@
+@startuml
+actor Client
+
+Client -> BuilderTest:testUpdateSignDataSetRequest()
+    activate BuilderTest
+    create Builder
+BuilderTest -> Builder
+    activate Builder
+    return builder
+
+BuilderTest -> Builder :setLocalType
+activate Builder
+Builder -> Builder:Builder
+return Builder
+
+BuilderTest -> Builder :setDatasetType
+activate Builder
+Builder -> Builder:Builder
+return Builder
+
+BuilderTest -> Builder :setMethodType
+activate Builder
+Builder -> Builder:Builder
+return Builder
+
+BuilderTest -> Builder :setSkeletonType
+activate Builder
+Builder -> Builder:Builder
+return Builder
+
+BuilderTest -> Builder ++:build
+
+create "request:UpdateSignDataSetRequest"
+Builder ->  "request:UpdateSignDataSetRequest"++
+
+return request
+return request
+
+return testResult
+
+@enduml

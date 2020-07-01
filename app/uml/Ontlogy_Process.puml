@@ -1,0 +1,25 @@
+@startuml
+scale 3
+(*) --> "Процес навчання жестам та дактилям" as root
+
+root --> "Гра" as game
+root --> "Оцінка дій" as rate
+root --> "Розпізновання" as decode
+root --> "Збір статистики"
+decode --> "Розпізновання\n жестів" as sign
+decode --> "Розпізновання\n карток" as card
+decode --> "Розпізновання\n дактилів" as dactyl
+card --> "Використання\n кінцевих автоматів"
+dactyl --> "Розпізновання\n методом\n RNN" as rnn
+dactyl --> "Розпізновання\n методом\n GRU" as gru
+dactyl --> "Розпізновання\n методом\n TGCN" as tgcn
+
+game --> "Гра в карткову гру" as cardGame
+game --> "Гра в жетсову гру" as signGame
+game --> "Гра в дактильну гру" as dactylGame
+dactylGame --> "Гра гру в алфавіт"
+cardGame --> "Гра в гру пари"
+cardGame --> "Гра в гру асоциації"
+signGame --> "Гра в гру шаради"
+signGame --> "Розповідання казок"
+@enduml
