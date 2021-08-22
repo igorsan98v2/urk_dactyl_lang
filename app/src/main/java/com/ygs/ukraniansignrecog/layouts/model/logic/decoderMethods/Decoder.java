@@ -3,7 +3,7 @@ package com.ygs.ukraniansignrecog.layouts.model.logic.decoderMethods;
 import com.ygs.ukraniansignrecog.layouts.model.logic.io.InputSignal;
 import com.ygs.ukraniansignrecog.layouts.model.logic.io.OutputSignal;
 
-public abstract class Decoder {
+public class Decoder {
     DecoderMethod method;
 
     public void setMethod(DecoderMethod method) {

@@ -1,12 +1,14 @@
 @startuml
-actor Дитина as child
-actor Батьки as parent
-actor Дослідник as scientist
+
+skinparam dpi 600
 
 scale 3
 
 left to right direction
 
+actor Дитина as child
+actor Батьки as parent
+actor Дослідник as scientist
 rectangle ПМК {
     usecase "Іграти" as play
     usecase "Вибрати режим" as selectMode

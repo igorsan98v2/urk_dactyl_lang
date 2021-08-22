@@ -2,6 +2,7 @@ package com.ygs.ukraniansignrecog.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,9 +14,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.ygs.ukraniansignrecog.R;
+import com.ygs.ukraniansignrecog.annotation.DecoderType;
+import com.ygs.ukraniansignrecog.layouts.model.logic.decoderMethods.Decoder;
+import com.ygs.ukraniansignrecog.layouts.model.logic.decoderMethods.DecoderMethod;
+import com.ygs.ukraniansignrecog.layouts.model.logic.decoderMethods.DecoderProvider;
+import com.ygs.ukraniansignrecog.layouts.model.logic.io.InputSignal;
+import com.ygs.ukraniansignrecog.layouts.model.logic.io.OutputSignal;
 
 public class HomeFragment extends Fragment {
-
+    Decoder decoder = new Decoder();
+    DecoderProvider mProvider = new DecoderProvider() {
+        @Override
+        public DecoderMethod provide(int decoderCode) {
+            return null;
+        }
+    };
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,5 +44,22 @@ public class HomeFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tables:
+                decoder.setMethod(mProvider.provide(DecoderType.TABLE_METHOD));
+                break;
+            case R.id.movements:
+                decoder.setMethod(mProvider.provide(DecoderType.MOVE_AND_POSE_METHOD));
+                break;
+            case R.id.ren:
+                decoder.setMethod(mProvider.provide(DecoderType.REN));
+                break;
+        }
+
+        return true;
     }
 }

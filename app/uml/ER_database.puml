@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+entity "Rate" {
+    *id:Int
+    *task_id: Int <FK>
+    --
+    date: Int
+    M_rate:Double
+    Z_rate:Double
+}
+entity "Task" {
+    *id:Int
+    --
+    description:Text
+    task_text: Text
+    execution_time:Int
+}
+
+
+
+entity "Dactyl rate" {
+    *id:Int
+    * task_id: Int <FK>
+    * rate_id: Int <FK>
+    * expected_dactyl:: Int <FK>
+    * actual_dactyl: : Int <FK>
+    __
+    is_ok: Boolean
+    position: Int
+    length_to_camera: Int
+    time_from_start: Int
+    time_to_do: Int
+}
+
+entity "Dactyl"{
+  * code:Int
+  __
+  image:blob
+  latter_val: Text
+  language_code: Text
+}
+"Rate" 	|o-- "Task"
+"Task" }-- "Dactyl rate"
+"Rate" }--  "Dactyl rate"
+"Dactyl" |o--  "Dactyl rate"
+
+@enduml
